@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Dongle&family=Poppins:wght@400;500&display=swap');
+:root {
+
+  --size-100: 0.5rem;
+  --size-200: 1rem;
+  --size-300: 1.3rem;
+  --size-400: 2rem;
+
+  --fs-200: 1rem;
+  --fs-300: 1.2rem;
+  --fs-400: 2.8rem;
+}
+
+/* Utility classes */
+.fs-300 {
+  font-size: var(--fs-300);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.padding-2 {
+  padding: var(--size-200);
+}
+.padding-3 {
+  padding: var(--size-300) var(--size-200);
+}
+.margin-2 {
+  margin: var(--size-200);
+}
+.margin-2-1 {
+  margin: var(--size-200) var(--size-100);
+}
+
+body {
+  margin: 0;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-family: 'Dongle', sans-serif;
+  font-family: 'Poppins', sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
