@@ -10,21 +10,24 @@ import axios from 'axios';
 
 function App() {
 
-  const {setUser, setIsAuth} = useContext(Context);
+  const {setUser, setIsAuth, isAuth} = useContext(Context);
+  
 
   useEffect(() => {
-    axios.get(`${server}/users/me`, {
-      withCredentials: true,
-    })
-    .then((res) => {
-      setUser(res.data.user);
-      setIsAuth(true)
-    })
-    .catch((error) => {
-      setUser({});
-      setIsAuth(false)
-    })
-  }, [])
+    if (isAuth) {
+      axios.get(`${server}/user/me`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data.user);
+        setIsAuth(true)
+      })
+      .catch((error) => {
+        setUser({});
+        setIsAuth(false)
+      })
+    }
+  }, [isAuth])
 
   return (
     <div className="App ">

@@ -7,19 +7,58 @@ import toast from 'react-hot-toast';
 
 const Signup = () => {
 
+  const {isAuth, setIsAuth, loading, setLoading} = useContext(Context);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {isAuth, setIsAuth, loading, setLoading} = useContext(Context);
+  const [pic, setPic] = useState("");
+  const [encodedPic, setEncodedPic] = useState();
+
+  const handlePic = async (pic) => {
+    if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
+      EncodeImage(pic);
+    } else {
+      setIsAuth(false)
+      toast.error("Add png or jpg format");
+    }
+  }
+
+  const EncodeImage = (pic) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(pic);
+    reader.onloadend = () => {
+      const newEncodedPic = reader.result;
+      setEncodedPic(newEncodedPic);
+      uploadImage(newEncodedPic);
+    }
+  }
+
+  const uploadImage = async (encodedPic) => {
+    try {
+      const { data } = await axios.post(
+        `${server}/user/newUser/profilePic/upload`, 
+        { data: encodedPic}, 
+        { headers: {
+          "Content-Type": "application/json"
+        },
+        withCredentials: true
+      })
+      toast.success(data.message)
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      const { data } = await axios.post(`${server}/users/newUser`, {
+      const { data } = await axios.post(`${server}/user/newUser`, {
         name,
         email,
-        password
+        password,
+        data: encodedPic
       }, {
         headers: {
           "Content-Type": "application/json"
@@ -79,9 +118,17 @@ const Signup = () => {
             <label htmlFor="password">Password</label>
             <i></i>
           </div>
+
+          <div className="form__inputBox no-bg">
+            <input
+              onChange={(e) => handlePic(e.target.files[0])} 
+              type="file" 
+              id="file"
+              accept='image/*' />
+          </div>
           
           <div className="form__links-signup">
-            <Link to="/"> Login </Link>
+            <Link to="/"> Already having account? </Link>
           </div>
           
           <button disabled={loading} type="submit"> Signup </button>

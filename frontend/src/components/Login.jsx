@@ -10,28 +10,32 @@ const Login = () => {
   const {isAuth, setIsAuth, loading, setLoading} = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [pic, setPic] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
+      console.log('hoga..');
+
       const { data } = await axios.post(`${server}/user/login`, {
         email,
-        password
+        password,
+        pic
       }, {
         headers: {
           "Content-Type": "application/json"
         },
         withCredentials: true,
       })
-      // console.log('asldkfjdslj');
-      toast.success('Ho gaya!');
-      // setIsAuth(true)
-      // setLoading(false);
+      // toast.success('Ho gaya!');
+      // console.log('hoga..');
+      setIsAuth(true)
+      setLoading(false);
       // console.log(data);
     } catch (error) {
-      // toast.error(error.response.data.message);
-      console.log(error);
+      toast.error(error.response.data.message);
+      // console.log(error.message);
       setIsAuth(false)
       setLoading(false);
     }
@@ -51,6 +55,7 @@ const Login = () => {
               type="text" 
               id="email" 
               autoComplete="on" 
+              autoFocus
               required />
             <label htmlFor="email">Email</label>
             <i></i>
