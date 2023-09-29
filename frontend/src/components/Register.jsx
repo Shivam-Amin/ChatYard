@@ -13,6 +13,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [pic, setPic] = useState("");
   const [encodedPic, setEncodedPic] = useState();
+  const [yardID, setYardID] = useState("");
 
   const handlePic = async (pic) => {
     if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
@@ -36,7 +37,7 @@ const Signup = () => {
   const uploadImage = async (encodedPic) => {
     try {
       const { data } = await axios.post(
-        `${server}/user/newUser/profilePic/upload`, 
+        `${server}/user/register/profilePic/upload`, 
         { data: encodedPic}, 
         { headers: {
           "Content-Type": "application/json"
@@ -54,10 +55,11 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${server}/user/newUser`, {
+      const { data } = await axios.post(`${server}/user/register`, {
         name,
         email,
         password,
+        yardID: yardID,
         data: encodedPic
       }, {
         headers: {
@@ -67,7 +69,7 @@ const Signup = () => {
       })
       toast.success(data.message)
       setIsAuth(true);
-      setLoading(false);
+      setLoading(true);
     } catch (error) {
       toast.error(error.response.data.message);
       setIsAuth(false);
@@ -75,12 +77,12 @@ const Signup = () => {
     }
   }
 
-  if (isAuth) return <Navigate to={'/'} />
+  if (isAuth) return <Navigate to={'/login'} />
   
   return (
     <div className="box box-signup">
       <div className="box__form">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} >
           <h2 className="form__h2">Sign up </h2>
 
           <div className="form__inputBox">
@@ -100,7 +102,7 @@ const Signup = () => {
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)} 
-              type="text" 
+              type="email" 
               id="email" 
               autoComplete="on" 
               required />
@@ -119,6 +121,17 @@ const Signup = () => {
             <i></i>
           </div>
 
+          <div className="form__inputBox">
+            <input
+              value={yardID}
+              onChange={(e) => setYardID(e.target.value)} 
+              type="text" 
+              id="yardID" 
+              required />
+            <label htmlFor="yardID">YardID</label>
+            <i></i>
+          </div>
+
           <div className="form__inputBox no-bg">
             <input
               onChange={(e) => handlePic(e.target.files[0])} 
@@ -128,7 +141,7 @@ const Signup = () => {
           </div>
           
           <div className="form__links-signup">
-            <Link to="/"> Already having account? </Link>
+            <Link to="/login"> Already having account? </Link>
           </div>
           
           <button disabled={loading} type="submit"> Signup </button>

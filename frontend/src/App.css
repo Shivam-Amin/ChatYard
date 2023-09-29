@@ -6,6 +6,8 @@
   --SUPPORT-COLOR: rgb(143, 143, 143);
 }
 
+
+
 *,
 *::before,
 *::after {
@@ -63,7 +65,7 @@ picture {
 }
 
 
-.container {
+/* .container {
   width: 45rem;
   min-height: 10rem;
   background: #333;
@@ -84,4 +86,4 @@ hr {
   .container {
     width: 22rem;
   }
-}
+} */

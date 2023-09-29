@@ -10,33 +10,38 @@ const Login = () => {
   const {isAuth, setIsAuth, loading, setLoading} = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [pic, setPic] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      console.log('hoga..');
 
-      const { data } = await axios.post(`${server}/user/login`, {
+    // Regular expression pattern for a valid email address
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    // Test the email against the pattern
+    if (!emailPattern.test(email)) {
+      toast.error("Type a correct email address...");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data } = await axios.post(`${server}/user/login`, JSON.stringify({
         email,
         password,
-        pic
-      }, {
+      }), {
         headers: {
           "Content-Type": "application/json"
         },
-        withCredentials: true,
+        withCredentials: true,  
       })
-      // toast.success('Ho gaya!');
-      // console.log('hoga..');
-      setIsAuth(true)
-      setLoading(false);
-      // console.log(data);
+      toast.success(data.message);
+      setIsAuth(true);
+      setLoading(true);
+
     } catch (error) {
       toast.error(error.response.data.message);
-      // console.log(error.message);
-      setIsAuth(false)
+      setIsAuth(false);
       setLoading(false);
     }
   }
@@ -57,8 +62,7 @@ const Login = () => {
               autoComplete="on" 
               autoFocus
               required />
-            <label htmlFor="email">Email</label>
-            <i></i>
+            <label htmlFor="text">Email</label>
           </div> 
 
           <div className="form__inputBox">
@@ -69,7 +73,6 @@ const Login = () => {
               id="password" 
               required />
             <label htmlFor="password">Password</label>
-            <i></i>
           </div>
           
           <div className="form__links">

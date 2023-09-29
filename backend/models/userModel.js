@@ -5,10 +5,16 @@ const UserSchema = new Schema ({
     email: {
         type: String,
         unique: true
-    }, password: {
+    }, 
+    yardID: {
         type: String,
-        select: false,
-    }, pic: {
+        unique: true
+    }, 
+    password: {
+        type: String,
+        select: false
+    }, 
+    pic: {
         type: String,
         default: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'
     }

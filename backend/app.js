@@ -1,22 +1,29 @@
 import express from 'express';
 import { errorMiddleware } from './middleware/err.js';
 import userRoute from './routes/userRoutes.js';
+import chatRoute from './routes/chatRoutes.js';
+import messageRoute from './routes/messageRoutes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 export const app = express();
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow credentials (cookies)
+  optionsSuccessStatus: 204, // Respond with a 204 status for preflight requests
+}));
+
+
 // Using Middlewares..
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}))
 app.use(cookieParser());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173'); // Allow requests from any origin
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specific HTTP methods
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); // Allow specific headers
-  res.header('Access-Control-Allow-Credentials', 'true')
-  next();
-});
+
+// app.options('*', cors()); // Respond to all OPTIONS requests with CORS headers
+
+
 
 // Using routes..
 app.get('/', (req, res) => {
@@ -24,6 +31,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/user', userRoute);
+app.use('/api/v1/chat', chatRoute);
+app.use('/api/v1/message', messageRoute);
 
 
 // Using next() Middleware

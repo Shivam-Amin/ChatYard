@@ -38,6 +38,7 @@ const registerProfilePic = async (req, res, next) => {
 const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
+    const yardID = "@" + req.body.yardID;
 
     let user = await User.findOne({ email });
     if (user) {
@@ -45,16 +46,18 @@ const register = async (req, res, next) => {
       return next(new ErrorHandler("User already exist...", 404));
     }
 
+    let sameID = await User.findOne({ yardID });
+    if (sameID) {
+      return next(new ErrorHandler("YardID already exist...", 404))
+    }
 
     // create user with hashed password.
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    console.log('starting........');
     
     if (ImageID) {
-      user = await User.create({name, email, password: hashedPassword, pic:ImageID.secure_url});
+      user = await User.create({name, email, yardID, password: hashedPassword, pic:ImageID.secure_url});
     } else {
-      user = await User.create({name, email, password: hashedPassword});
+      user = await User.create({name, email, yardID, password: hashedPassword});
     }
 
     sendCookie(user, res, 201, "Registered Successfully...");
@@ -66,7 +69,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const { email, password, pic } = req.body;
+    const { email, password } = req.body;
 
     let user = await User.findOne({ email }).select("+password");
     if (!user) {
@@ -77,8 +80,6 @@ const login = async (req, res, next) => {
     if (!isMatch) {
       return next(new ErrorHandler("Invalid Email or password...", 404))
     }
-
-    // console.log('req has come');
 
     sendCookie(user, res, 201, "Login Successfully...");
   } catch (error) {
@@ -107,10 +108,30 @@ const getMyProfile = (req, res) => {
   })
 }
 
+const getUsers = async (req, res, next) => {
+  try {
+    const keywords = req.query.search 
+      ? (req.query.search.startsWith('@')) 
+          ? { yardID: { $regex: req.query.search, $options: "i"} } 
+          : { name: {$regex: req.query.search, $options: "i"} }
+      : null
+
+    let users;
+    if (keywords) {
+      users = await User.find(keywords).find({ _id: {$ne: req.user._id} });
+    }
+
+    res.status(200).json({users});
+  } catch (error) {
+    next(error)
+  }
+}
+
 export {
-    register,
-    login,
-    logout,
-    getMyProfile,
-    registerProfilePic
+  register,
+  login,
+  logout,
+  getMyProfile,
+  registerProfilePic,
+  getUsers
 }

@@ -8,12 +8,17 @@
 
 :root {
     --COLOR: rgb(86, 167, 254);
-    /* --COLOR: #45f3ff; */
     --SUPPORT-COLOR: rgb(143, 143, 143);
 
     --WIDTH: 380px;
     --HEIGHT: 415px;
-    --SIGNUP-HEIGHT: 500px;
+    --SIGNUP-WIDTH: 420px;
+    --SIGNUP-HEIGHT: 540px;
+}
+
+.box-signup {
+    /* --WIDTH: 420px; */
+    --HEIGHT: 540px;
 }
 
 
@@ -24,14 +29,9 @@
     font-family: 'Poppins', sans-serif;
 
     margin: 4rem auto;
-    /* background: #1c1c1c; */
     background: #333;
     border-radius: 8px;
     overflow: hidden;
-}
-
-.box-signup {
-    height: var(--SIGNUP-HEIGHT);
 }
 
 .box::before {
@@ -51,19 +51,19 @@
 }
 
 .box::after {
-    content: "";
+    content: ""; 
     position: absolute;
     width: var(--WIDTH);
     height: var(--HEIGHT);
     top: -50%;
     left: -50%;
-    background: linear-gradient(0deg, transparent, var(--COLOR), var(--COLOR));
+    background: linear-gradient(0deg, transparent, var(--COLOR), var(--COLOR)); 
 
     transform-origin: bottom right;   /* note that it's position is relative to box class and 50% top-left */
     animation-name: animate;
     animation-duration: 6s;
     animation-timing-function: linear;
-    animation-iteration-count: infinite;
+    animation-iteration-count: infinite; 
     animation-delay: -3s;
 }
 
@@ -77,10 +77,8 @@
     inset: 1.6px;
 
     border-radius: 8px;
-    /* background: #28292d; */
     background: #333;
     z-index: 1;
-
     padding: 50px 40px;
 
     display: flex;
@@ -96,13 +94,13 @@
 .form__inputBox {
     position: relative;
     width: 100%;
-    margin-top: 35px;
+    margin-top: 30px;
 }
 
 .form__inputBox input {
     position: relative;
     width: 100%;
-    padding: 9px 10px;
+    padding: 8px 10px;
 
     font-size: 1em;
     font-weight: bold;
@@ -117,16 +115,12 @@
 }
 
 .form__inputBox.no-bg input {
-    padding: 5px 5px 5px;
+    padding: 0px;
 
     font-size: 0.8em;
     font-weight: 100;
     color: whitesmoke;
     background: none;
-}
-
-.form__inputBox.no-bg button {
-    background-color: red;
 }
 
 .form__inputBox label {
@@ -142,9 +136,8 @@
 
 .form__inputBox input:focus ~ label,
 .form__inputBox input:valid ~ label {
-
     color: var(--COLOR);
-    transform: translate(-15px, -30px);
+    transform: translate(-15px, -23px);
     font-size: .75em;
 }
 
@@ -156,7 +149,7 @@
 
 .form__links a,
 .form__links-signup a {
-    margin: 20px 0;
+    margin: 19px 0;
     font-size: 0.90em;
     color: var(--SUPPORT-COLOR);
     text-decoration: none;
@@ -192,7 +185,6 @@
     justify-content: right;
 }
 
-
 .box__form > * > button[type="submit"] {
     border: none;
     outline: none;
@@ -213,7 +205,7 @@ button[type="submit"]:active {
     opacity: 0.8;
 }
 
-button:disabled {
+button[type="submit"]:disabled {
     cursor: not-allowed;
 }
 
@@ -226,3 +218,4 @@ button:disabled {
     padding: 50px 30px;
   }
 }
+

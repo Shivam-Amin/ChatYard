@@ -1,0 +1,35 @@
+.listYard {
+    --primary-color: hsl( 220 calc( 1 *6.5%) 18% /1);
+    --search-bar-color: ;
+    color: whitesmoke;
+}
+
+.container {
+    min-width: 280px;
+    width: 300px;
+    height: 100vh;
+    padding: 16px 12px 0;
+    background-color: var(--primary-color);
+}
+
+h1 {
+    font-size: 25px;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.search {
+    width: 100%;
+}
+
+.search input {
+    color: whitesmoke;
+    font-style: inherit;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 100%;
+    padding: 2px;
+    background-color: #333;
+    
+    
+}

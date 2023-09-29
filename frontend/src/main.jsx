@@ -2,9 +2,32 @@ import React, { createContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import { Provider } from 'react-redux';
+import store from '../store.js';
 
 export const server = "//localhost:5000/api/v1";
-export const Context = createContext({isAuth: false})
+export const Context = createContext();
+
+// Check if the session storage values exist
+const storedTopLinksJSON = sessionStorage.getItem('topLinks');
+const storedBottomLinksJSON = sessionStorage.getItem('bottomLinks');
+
+const topLinks = storedTopLinksJSON ? JSON.parse(storedTopLinksJSON) : [
+  { href: '#home', title: 'Home', label: 'Home', selected: true },
+  { href: '#chat', title: 'Chats', label: 'Chat', selected: true },
+  { href: '#groupChat', title: 'Group Chats', label: 'GroupChat', selected: false },
+  { href: '#bots', title: 'Bots', label: 'Bots', selected: false },
+  { href: '#notification', title: 'Notifications', label: 'Notifications', selected: false },
+];
+
+const bottomLinks = storedBottomLinksJSON ? JSON.parse(storedBottomLinksJSON) : [
+  { href: '#mode', title: 'Mode', label: 'Mode', selected: false },
+  { href: '#logout', title: 'Logout', label: 'Logout', selected: false },
+];
+
+sessionStorage.setItem("topLinks", JSON.stringify(topLinks))
+sessionStorage.setItem("bottomLinks", JSON.stringify(bottomLinks))
+
 
 const AppWrapper = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -13,14 +36,11 @@ const AppWrapper = () => {
 
   return (
     <Context.Provider
-        value={{
-          isAuth,
-          setIsAuth,
-          loading,
-          setLoading,
-          user, 
-          setUser
-        }}>
+      value={{
+        isAuth, setIsAuth,
+        loading, setLoading,
+        user, setUser,
+        topLinks, bottomLinks}} >
         <App />
     </Context.Provider>
   )
@@ -28,6 +48,8 @@ const AppWrapper = () => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AppWrapper />
+    <Provider store={store} >
+      <AppWrapper />
+    </Provider>
   </React.StrictMode>,
 )

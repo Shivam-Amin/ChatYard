@@ -5,7 +5,7 @@ const MessageSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    text: {
+    message: {
         type: String,
         trim: true,
     },
@@ -17,4 +17,5 @@ const MessageSchema = new Schema({
     timestamps: true,
 })
 
-export const Message = model("Message", MessageSchema)
+export const Message = model("Message", MessageSchema);
+
