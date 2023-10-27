@@ -42,6 +42,54 @@ const accessChat = async (req, res, next) => {
     }
 }
 
+const removeChat = async (req, res, next) => {
+  try {
+    const { userID } = req.body;
+
+    if (!userID) {
+      return next(new ErrorHandler("Enter the user...", 404));
+    }
+
+    var isChat = await Chat.findOneAndDelete({
+      isGroupChat: false,
+      $and: [
+        { users: { $elemMatch: { $eq: req.user._id }}},
+        { users: { $elemMatch: { $eq: userID }}}
+      ]
+    })
+
+    isChat = await Chat.findOneAndUpdate(
+      {
+        isGroupChat: true,
+        $and: [
+          { users: { $elemMatch: { $eq: req.user._id }}},
+          { users: { $elemMatch: { $eq: userID }}}
+        ]
+      }, { 
+        $pull: { users: userID } 
+      }
+    );
+    // .populate("users")
+    // .populate("latestMessage")
+
+    if (!isChat) {
+      return next(new ErrorHandler("Something went wrong...", 404));
+    }
+
+    // isChat = await User.populate(isChat, {
+    //   path: "latestMessage.sender",
+    //   select: "name pic yardID"
+    // })
+
+    res.status(200).json({
+      success: true,
+      message: "Friend removed successfully!"
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const fetchChat = async (req, res, next) => {
   try {
     var allChats = await Chat.find({ 
@@ -136,25 +184,31 @@ const removeFromGroup = async (req, res, next) => {
 const addToGroup = async (req, res, next) => {
   const { chatId, userId } = req.body;
 
-  // check if the requester is admin
-  const added = await Chat.findByIdAndUpdate(
-    chatId,
-    { $push: { users: userId } },
-    { new: true }
-  )
-    .populate("users", "-password")
-    .populate("groupAdmin", "-password");
+  try {
+    // check if the requester is admin
+    const added = await Chat.findByIdAndUpdate(
+      chatId,
+      { $push: { users: userId } },
+      { new: true }
+    )
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+  
+    if (!added) {
+      return next(new ErrorHandler("Chat not found!", 404))
+    } else {
+      res.status(200).json(added);
+    }
 
-  if (!added) {
-    return next(new ErrorHandler("Chat not found!", 404))
-  } else {
-    res.status(200).json(added);
+  } catch (error) {
+    next(error.message)
   }
 };
 
 
 export {
     accessChat,
+    removeChat,
     fetchChat,
     CreateGroupChat,
     renameGroup,

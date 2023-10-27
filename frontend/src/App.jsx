@@ -3,15 +3,19 @@ import './App.css'
 import { Context, server } from './main';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import Login from './components/Login';
-import Signup from './components/Register';
+import Login from './components/Auth/Login';
+import Signup from './components/Auth/Register';
 import axios from 'axios';
 import Chat from './components/Chat';
+
+// var 
 
 
 function App() {
 
   const {setUser, setIsAuth, isAuth} = useContext(Context);
+
+
   
   useEffect(() => {
     axios.get(`${server}/user/me`, {

@@ -1,0 +1,100 @@
+:root {
+  --primary-background: hsl( 223 calc( 1 *6.7%) 20.6% /1);
+  --secondary-color-900: hsl( 220 calc( 1 *6.5%) 23% /1);
+  --secondary-color-500: hsl( 220 calc( 1 *6.5%) 28% /1);
+
+  --font-size-700: 17px;
+}
+
+.selectedChat {
+  width: 100%;
+  min-width: 480px;
+  height: 100%;
+  background-color: var(--primary-background);
+  color: whitesmoke;
+}
+
+.selectedChat.img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectedChat.img img {
+  width: 400px;
+}
+
+.selectedChat .top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 1rem;
+  margin-bottom: 2px; 
+  box-shadow: 0 8px 4px -8px rgba(0, 0, 0, 0.2);
+  /* border-bottom: 0.5px solid rgba(0, 0, 0, 0.2); */
+}
+
+.selectedChat .top-bar img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+}
+
+.selectedChat .top-bar .name {
+  font-size: var(--font-size-700);
+  font-weight: 600;
+}   
+
+.mid {
+  height: 81%;
+  /* width: 801.6px; */
+  overflow: hidden;   /* for some reson. Don't remove it.. */
+  margin-right: 4px;
+  
+}
+
+.bottom-bar {
+  position: relative;
+  padding: 0 1em 1.2em;
+}
+
+.bottom-bar textarea {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-family: 'Dongle', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  color: whitesmoke;
+  background-color: var(--secondary-color-500);
+
+  width: 100%;
+  padding: 14px;
+  padding-right: 2.5rem;
+
+  letter-spacing: 0.7 px;
+  font-size: 0.9em;
+  font-weight: 450;
+  white-space: pre-wrap;
+  overflow: hidden;
+  resize: none;
+
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+.bottom-bar label {
+  position: absolute;
+  right: 20px;
+  top: 7px;
+  padding: 4px 6px 0;
+  border-radius: 4px;
+}
+
+.bottom-bar label:is(:hover, :focus) {
+  background-color: var(--secondary-color-900);
+}
+
+.bottom-bar  svg {
+  width: 25px;
+  height: 25px;
+}

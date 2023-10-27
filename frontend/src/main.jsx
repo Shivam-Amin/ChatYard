@@ -33,6 +33,7 @@ const AppWrapper = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
+  const [reset, setReset] = useState(false)
 
   return (
     <Context.Provider
@@ -40,6 +41,7 @@ const AppWrapper = () => {
         isAuth, setIsAuth,
         loading, setLoading,
         user, setUser,
+        reset, setReset,
         topLinks, bottomLinks}} >
         <App />
     </Context.Provider>

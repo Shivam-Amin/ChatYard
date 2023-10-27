@@ -15,7 +15,7 @@ const Sidebar = () => {
 
   return (
     <div className={`sidebar ${mode}`}>
-      <nav>
+      <nav className='sidebar__nav'>
         <div className="sidebar-top">
           <input
             type='radio'
@@ -48,7 +48,7 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
   const { topLinks, bottomLinks, loading, setLoading} = useContext(Context);
 
   const selectThisLink = async (title) => {
-    await setLoading(true)
+    setLoading(true)
     console.log(loading);
     if (title == 'Logout') {
       try {
@@ -72,8 +72,17 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
   
     sessionStorage.setItem('topLinks', JSON.stringify(topLinks))
     sessionStorage.setItem('bottomLinks', JSON.stringify(bottomLinks))
-    await setLoading(false)
+    setLoading(false)
   }
+
+  // const [name, setName] = useState(second)
+  // if (title === 'Chats' || title === 'Group Chats' || title === 'Bots') {
+  //   await setName('topLinks')
+  // } else if (title === 'Mode' ||  title === 'Logout') {
+  //   await setName('bottomLinks')
+  // } else {
+
+  // }
 
   return (
     <li>

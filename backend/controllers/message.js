@@ -1,6 +1,7 @@
 import { ErrorHandler } from "../middleware/err.js";
 import { Message } from "../models/messageModel.js";
 import { User } from "../models/userModel.js";
+import { Chat } from "../models/chatModel.js";
 
 const sendMessage = async (req, res, next) => {
     const { message, chatId } = req.body;
@@ -17,14 +18,19 @@ const sendMessage = async (req, res, next) => {
     };
 
     try {
-        var latestMessage = await Message.create(newMessage);
-        latestMessage = await latestMessage.populate("sender", "name pic")
-        latestMessage = await latestMessage.populate("chat")
-        latestMessage = await User.populate(latestMessage, {
+        var msg = await Message.create(newMessage);
+        msg = await msg.populate("sender", "name pic")
+        msg = await msg.populate("chat")
+        msg = await User.populate(msg, {
             path: "chat.users",
             select: "name pic yardID"
         })
 
+        await Chat.findByIdAndUpdate(chatId, {
+            latestMessage: msg
+        })
+
+        res.json(msg);
     } catch (error) {
         next(error);
     }
@@ -32,7 +38,9 @@ const sendMessage = async (req, res, next) => {
 
 const getAllMessages = async (req, res, next) => {
     try {
-        const messages = await Message.find({ chat: req.params.chatId })
+        const messages = await Message.find({ 
+            chat: req.params.chatId 
+        })
         .populate("sender")
         .populate("chat");
 

@@ -1,3 +1,26 @@
 .chat {
     display: flex;
+    height: 100vh;
+    min-width: 40em;
 }
+
+.chat .chat__listYard {
+    flex: 1;
+    height: 100vh;
+}
+
+.chat  .chat__main {
+    flex: 3;
+}
+
+.chat .chat__listYard2 {
+    flex: 1;
+    height: 100vh;
+}
+
+/* 
+.temp {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+} */
