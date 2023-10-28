@@ -48,7 +48,10 @@ const SelectedChat = ({ activeChat, setActiveChat, notifications, setNotificatio
       // & not to current user as it would be added by the enter effect.
       if (!selectedChatCompare || selectedChatCompare?._id !== activeChat._id) {
         // send notification
-        console.log('ldskfjlsfjlsakjflksdjflsdkj');
+        if (!notifications.include(newMessage)) {
+          setNotifications([newMessage, ...notifications]);
+        }
+        
       } else {
         await setMessages([...messages, newMessage]);
       }

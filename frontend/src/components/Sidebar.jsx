@@ -88,7 +88,7 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
   return (
     <>
     {
-      (title === 'Mode' || title === 'Logout')
+      (title === 'Mode' || title === 'Logout' || title === 'Notifications')
       ?<li>
         <input
           type='checkbox'
