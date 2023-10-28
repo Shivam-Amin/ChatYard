@@ -40,11 +40,18 @@ const ChatMessages = ({ activeChat, messages }) => {
     return (messages[i-1].sender._id === messages[i].sender._id)
   }
 
-  const isSameSenderMargin = (sender, i) => {
-    if (isSameSender(sender, i)) {
-      return '0 0 0 56px'
+  const isSameSenderPadding = (sender, i, isDateEqual) => {
+    if (isSameSender(sender, i) && isDateEqual) {
+      return '0.5px 0 0.5px 70px'
     }
-    return '10px 0 0 0'
+    return '0.5px 0 0.5px 15px'
+  }
+
+  const isSameSenderMargin = (sender, i, isDateEqual) => {
+    if (isSameSender(sender, i) && isDateEqual) {
+      return '0'
+    }
+    return '18px 0 0 0'
   }
 
   return (
@@ -56,30 +63,71 @@ const ChatMessages = ({ activeChat, messages }) => {
             // by using this approch,
             // it'll save us from XSS attacks.. 
             const sanitizedMessage = DOMPurify.sanitize(m.message.replace(/\n/g, '<br />'));
+            
+            const createdAtDate = new Date(m.createdAt);
+            // Format date and time
+            const formattedDate = createdAtDate.toLocaleDateString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            });
+            const formattedTime = createdAtDate.toLocaleTimeString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+
+            // COMPARE WITH CURRENT DATE.
+            const lastDate = new Date(messages[i-1]?.createdAt);
+            const lastFormattedDate = lastDate.toLocaleDateString('en-GB', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric',
+            });
+            const tempDate = createdAtDate.toLocaleDateString('en-GB', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric',
+            });
+            // Compare the formatted date with the current date
+            const isDateEqual = tempDate === lastFormattedDate;
+
+            const time = formattedDate + "  " + formattedTime;
 
             return (
-              <div 
-                className='msg' 
-                key={m._id}
-                style={{margin: isSameSenderMargin(m.sender, i)}} >
-                
-                  {
-                  !(isSameSender(m.sender, i))
-                  ? <>  
-                      <img src={m.sender.pic} alt="" />
-                      <div className='combineMsg'>
-                        <h2>{m.sender.name}</h2>
-                        <p dangerouslySetInnerHTML={{ __html: sanitizedMessage }}/>
-                      </div>
-                    </>
-                  : /* this checked for any html in the var sanitizedMessage
-                  & if so then it'll add new line as <br /> will be there.
-                  */
-                  <p dangerouslySetInnerHTML={{ __html: sanitizedMessage }} />
-                  }
-
-
+              <div key={m._id}>
+                {(!isDateEqual) 
+                ? <div className="date-with-line">
+                    <div className="date">{tempDate}</div>
+                  </div> 
+                : null}
+                <div 
+                  className='msg' 
+                  key={m._id}
+                  style={{padding: isSameSenderPadding(m.sender, i, isDateEqual), 
+                  margin: isSameSenderMargin(m.sender, i, isDateEqual)}} >
                   
+                    {
+                    (!(isSameSender(m.sender, i)) || !isDateEqual)
+                    ? <>  
+                        <img src={m.sender.pic} alt="" />
+                        <div className='combineMsg'>
+                          <div className="grp">
+                            <h2>{m.sender.name}</h2>
+                            <p> {time} </p>
+                          </div>
+                          <p dangerouslySetInnerHTML={{ __html: sanitizedMessage }}/>
+                        </div>
+                      </>
+                    : /* this checked for any html in the var sanitizedMessage
+                    & if so then it'll add new line as <br /> will be there.
+                    */
+                    <>
+                      <span> {formattedTime} </span>
+                      <p dangerouslySetInnerHTML={{ __html: sanitizedMessage }} />
+                    </>
+                    }
+                    
+                </div>
               </div>
             )
           })}

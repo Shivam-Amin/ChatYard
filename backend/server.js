@@ -26,7 +26,7 @@ const start = async () => {
     });
 
     io.on("connection", (socket) => {
-      console.log("Connected to socket.io");
+      // console.log("Connected to socket.io");
 
       socket.on('setup', (user) => {
         // create server for each user by their id
@@ -41,8 +41,6 @@ const start = async () => {
 
       socket.on('newMessage', (newMessage) => {
         var chat = newMessage.chat;
-
-        // console.log(newMessage);
         
         if (!chat.users) return console.log('chat.users not found...');
 

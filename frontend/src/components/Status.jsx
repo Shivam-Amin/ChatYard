@@ -5,7 +5,7 @@ const Status = () => {
   return (
     <div className='listChat'>
       <nav className="container status">
-        <h1>Online</h1>
+        <h1>Active Now</h1>
       </nav>
     </div>
   )

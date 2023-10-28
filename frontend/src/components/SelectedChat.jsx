@@ -14,7 +14,6 @@ var socket, selectedChatCompare;
   // To check where the message is from selected chat or not..
   // if it's not then will give notification.
 
-
 const SelectedChat = ({ activeChat, setActiveChat }) => {
   // const {loading} = useContext(Context);
   // console.log(activeChat);
@@ -26,12 +25,6 @@ const SelectedChat = ({ activeChat, setActiveChat }) => {
 
   
   const [socketConnected, setSocketConnected] = useState(false)
-
-  // useEffect(() => {
-  //   if (textareaRef.current) {
-  //     textareaRef.current.focus();
-  //   }
-  // }, []);
 
   useEffect(() => {
     socket = io(EndPoint);
@@ -190,7 +183,9 @@ const SelectedChat = ({ activeChat, setActiveChat }) => {
     <div className='selectedChat'>
       <div className="top-bar">
         <img className='avatar' src={pic()} alt="" />
-        <h2 className="name">{name()}</h2>
+        <div>
+          <h2 className="name">{name()}</h2>
+        </div>
       </div>
 
       <div className="mid">

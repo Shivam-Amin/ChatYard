@@ -1,9 +1,16 @@
 .chatMessages {
   --scrollbar-bgcolor: hsl( 220 calc( 1 *6.5%) 18% /1);
   --scrollbar-color: hsl( 225 calc( 1 *6.3%) 14.5% /1);
+  --msg-bgcolor: hsl( 220 calc( 1 *6.5%) 19.5% /1);
 
-  --font-color-900: hsl( 220 calc( 1 *6.5%) 92% /1);
-  --font-color-700: hsl( 220 calc( 1 *6.5%) 75% /1);
+
+  --font-color-900: hsl( 220 calc( 1 *6.5%) 100% /1);
+  --font-color-700: hsl( 220 calc( 1 *6.5%) 78% /1);
+  --font-color-500: hsl( 220 calc( 1 *6.5%) 61% /1);
+
+  --font-size-big: 14.46px;
+  --font-size-mid: 11.5px;
+  --font-size-small: 10.5px;
 }
 
 
@@ -16,7 +23,7 @@
   width: 801.6px;
   /* margin-right: 2em; */
   height: 100%;
-  padding: 0 10px;
+  padding: 0 10px 0 0;
   display: flex;
   justify-content: end;
   scrollbar-gutter: stable;
@@ -33,6 +40,7 @@
   flex-wrap: nowrap;
   /* overflow-x: hidden;
   white-space: nowrap; */
+  padding-bottom: 15rem;
 }
 
 .messages {
@@ -40,9 +48,31 @@
 }
 
 .messages .msg {
+  position: relative;
   display: flex;
   flex-direction: row;
+  padding-left: 10px;
 }
+
+.messages .msg:is(:hover) {
+  background-color: var(--msg-bgcolor);
+}
+
+/* for time show */
+span {
+  position: absolute;
+  display: none;
+  left: 0;
+  padding: 2px 0  0 10px;
+  font-size: var(--font-size-small);
+  color: var(--font-color-500);
+}
+
+.messages .msg:is(:hover) > span {
+  display: block;
+}
+
+
 
 .messages .msg img {
   display: inline-block;
@@ -58,13 +88,25 @@
   flex-direction: column;
 }
 
+.messages .msg .combineMsg .grp {
+  display: flex;
+  flex-direction: row;
+}
+
+.grp p {
+  padding: 5px 0 0 5px;
+  color: var(--font-color-500);
+  font-size: var(--font-size-small);
+}
+
 .messages .msg > .combineMsg h2 {
-  font-size: 15.36px;
+  font-size: var(--font-size-big);
+  font-weight: 400;
   color: var(--font-color-900);
 }
 
- p {
-  font-size: 13.36px;
+p {
+  font-size: var(--font-size-big);
   color: var(--font-color-700);
 }
 
@@ -82,6 +124,31 @@
 
 
 
+.date-with-line {
+  padding: 20px 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-size: var(--font-size-mid);
+  color: var(--font-color-700);
+}
+
+.date::before, .date::after {
+  content: "";
+  width: 320px;
+  height: 1.6px;
+  background-color: var(--scrollbar-bgcolor);
+  display: block;
+}
+
 /* ================= Scrollbar CSS =============== */
 
 .container::-webkit-scrollbar {
@@ -90,7 +157,7 @@
   margin: 20em;
   background-color: var(--scrollbar-bgcolor);
   border-radius: 100vw;
-  /* scroll-behavior: smooth; */
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {

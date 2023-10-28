@@ -4,10 +4,10 @@ import '../CSS/chat.css';
 import { Context, server } from '../main';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
-import ListYard from './ListChat';
 import SelectedChat from './SelectedChat.jsx';
 import Status from './Status.jsx';
 import Loading from './Loading.jsx';
+import ListChat from './ListChat';
 
 const Chat = () => {
   
@@ -40,8 +40,8 @@ const Chat = () => {
       <div className="chat__sidebar">
         <Sidebar />
       </div>
-      <div className="chat__listYard">
-        <ListYard chats={chats} setChats={setChats} setActiveChat={setActiveChat} />
+      <div className="chat__listChat">
+        <ListChat chats={chats} setChats={setChats} setActiveChat={setActiveChat} />
       </div>
 
       <div className="chat__main">

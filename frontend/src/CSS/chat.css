@@ -4,7 +4,7 @@
     min-width: 40em;
 }
 
-.chat .chat__listYard {
+.chat .chat__listChat {
     flex: 1;
     height: 100vh;
 }

@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 var userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-const ListYard = (props) => {
+const ListChat = (props) => {
   const {loading, setLoading, reset, setReset} = useContext(Context);
 
   const { chats, setChats, setActiveChat} = props;
@@ -133,4 +133,4 @@ const ListYard = (props) => {
   )
 }
 
-export default ListYard;
+export default ListChat;
