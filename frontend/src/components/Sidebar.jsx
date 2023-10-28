@@ -49,7 +49,7 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
 
   const selectThisLink = async (title) => {
     setLoading(true)
-    console.log(loading);
+    // console.log(loading);
     if (title == 'Logout') {
       try {
         const { data } = await axios.get(`${server}/user/logout`, {
@@ -58,12 +58,13 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
         setIsAuth(false);
         toast.success(data.message);
       } catch(error) {
-          console.log(error);
+          // console.log(error);
           toast.error(error.response.data.message);
       }
     } else if (title === 'Mode') {
       bottomLinks[0].selected = !bottomLinks[0].selected;
       setMode(bottomLinks[0].selected ? 'light' : 'dark');
+      
     } else {
       topLinks.forEach((link) => {
         link.selected = (link.title == title) ? true : false;
@@ -85,24 +86,49 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
   // }
 
   return (
-    <li>
-      <input
-        type='radio'
-        name={(title === 'Mode' || title === 'Logout') ?'sidebarLink2' : 'sidebarLink'}
-        id={title}
-        key={title}
-        defaultChecked = {selected} />
+    <>
+    {
+      (title === 'Mode' || title === 'Logout')
+      ?<li>
+        <input
+          type='checkbox'
+          // name={'sidebarLink2'}
+          id={title}
+          key={title}
+          aria-selected={(selected) ? true :false} />
 
-      <label htmlFor={title} className='tooltip' onClick={() => selectThisLink(title)} >
-          {title === 'Chats' && <PiChatCircleTextDuotone />}
-          {title === 'Group Chats' && <PiChatsCircleDuotone />}
-          {title === 'Bots' && <FaBots />}
-          {title === 'Notifications' && <PiBellBold /> }
-          {title === 'Mode' && <HiOutlineMoon />}
-          {title === 'Logout' && <HiLogout />}
-        <span className="tooltip__content">{label}</span>
-      </label>
-    </li>
+        <label htmlFor={title} className='tooltip' onClick={() => selectThisLink(title)} >
+            {title === 'Chats' && <PiChatCircleTextDuotone />}
+            {title === 'Group Chats' && <PiChatsCircleDuotone />}
+            {title === 'Bots' && <FaBots />}
+            {title === 'Notifications' && <PiBellBold /> }
+            {title === 'Mode' && <HiOutlineMoon />}
+            {title === 'Logout' && <HiLogout />}
+          <span className="tooltip__content">{label}</span>
+        </label>
+      </li>
+      :<li>
+        <input
+          type='radio'
+          name={'sidebarLink'}
+          id={title}
+          key={title}
+          defaultChecked = {selected} />
+
+        <label htmlFor={title} className='tooltip' onClick={() => selectThisLink(title)} >
+            {title === 'Chats' && <PiChatCircleTextDuotone />}
+            {title === 'Group Chats' && <PiChatsCircleDuotone />}
+            {title === 'Bots' && <FaBots />}
+            {title === 'Notifications' && <PiBellBold /> }
+            {title === 'Mode' && <HiOutlineMoon />}
+            {title === 'Logout' && <HiLogout />}
+          <span className="tooltip__content">{label}</span>
+        </label>
+      </li>
+    
+    }
+    </>
+    
   );
 };
 

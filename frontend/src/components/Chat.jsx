@@ -11,14 +11,11 @@ import ListChat from './ListChat';
 
 const Chat = () => {
   
-  const {setUser, setIsAuth, isAuth, loading} = useContext(Context);
   const [activeChat, setActiveChat] = useState();
   const [chats, setChats] = useState([]);
-
-  if (!isAuth) {
-    return <Navigate to={'/login'} />
-  }
-
+  const [notifications, setNotifications] = useState([]);
+  const {user, setUser, setIsAuth, isAuth, loading} = useContext(Context);
+  
   useEffect(() => {
     axios.get(`${server}/user/me`, {
       withCredentials: true,
@@ -32,6 +29,10 @@ const Chat = () => {
       setIsAuth(false)
     })
   }, [])
+
+  if (!isAuth) {
+    return <Navigate to={'/login'} />
+  }
 
   // console.log(activeChat);
   return (
@@ -47,7 +48,9 @@ const Chat = () => {
       <div className="chat__main">
         <SelectedChat 
           activeChat={activeChat} 
-          setActiveChat={setActiveChat} />
+          setActiveChat={setActiveChat}
+          notifications={notifications}
+          setNotifications={setNotifications} />
       </div>
 
       <div className="chat__listYard2">

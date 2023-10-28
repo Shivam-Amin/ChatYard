@@ -72,7 +72,7 @@ nav.sidebar__nav {
   position: relative;
 }
 
-input[type='radio'] {
+input[type='radio'], input[type='checkbox'] {
   position: fixed;
   left: -1000px;
 }
@@ -101,12 +101,14 @@ input[type='radio'] {
 
 
 .sidebar input[type="radio"]:checked ~ label,
+.sidebar input[type="checkbox"]:checked ~ label,
 .sidebar label:hover,
 .sidebar label:focus {
   background-color: var(--sidebar-svg-background);
 }
 
-.sidebar input[type="radio"]:checked ~ label svg {
+.sidebar input[type="radio"]:checked ~ label svg,
+.sidebar input[type="checkbox"]:checked ~ label svg {
   stroke: var(--sidebar-svg-hover);
   fill: var(--sidebar-svg-hover);
 }

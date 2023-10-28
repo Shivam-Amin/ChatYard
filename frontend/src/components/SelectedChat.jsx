@@ -14,7 +14,7 @@ var socket, selectedChatCompare;
   // To check where the message is from selected chat or not..
   // if it's not then will give notification.
 
-const SelectedChat = ({ activeChat, setActiveChat }) => {
+const SelectedChat = ({ activeChat, setActiveChat, notifications, setNotifications }) => {
   // const {loading} = useContext(Context);
   // console.log(activeChat);
   const {user, loading, setLoading, reset, setReset} = useContext(Context);
@@ -46,7 +46,7 @@ const SelectedChat = ({ activeChat, setActiveChat }) => {
     socket.on('RecieveMessage', async (newMessage) => {
       // add recieved message to every other users messages.
       // & not to current user as it would be added by the enter effect.
-      if (!selectedChatCompare || selectedChatCompare._id !== activeChat._id) {
+      if (!selectedChatCompare || selectedChatCompare?._id !== activeChat._id) {
         // send notification
         console.log('ldskfjlsfjlsakjflksdjflsdkj');
       } else {
