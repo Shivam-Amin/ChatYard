@@ -64,7 +64,8 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
     } else if (title === 'Mode') {
       bottomLinks[0].selected = !bottomLinks[0].selected;
       setMode(bottomLinks[0].selected ? 'light' : 'dark');
-      
+    } else if (title === 'Notifications') {
+      topLinks[4].selected = !topLinks[4].selected;
     } else {
       topLinks.forEach((link) => {
         link.selected = (link.title == title) ? true : false;
@@ -92,10 +93,10 @@ const SidebarLink = ({ title, label, selected,  setMode, setIsAuth }) => {
       ?<li>
         <input
           type='checkbox'
-          // name={'sidebarLink2'}
+          name={'sidebarLink2'}
           id={title}
           key={title}
-          aria-selected={(selected) ? true :false} />
+          defaultChecked={(selected) ? true :false} />
 
         <label htmlFor={title} className='tooltip' onClick={() => selectThisLink(title)} >
             {title === 'Chats' && <PiChatCircleTextDuotone />}

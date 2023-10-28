@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Context, server } from '../main';
 import { HiSearch } from 'react-icons/hi';
 import '../CSS/listChat.css'
+import '../CSS/sidebar.css'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 // import { ObjectId } from 'mongodb';

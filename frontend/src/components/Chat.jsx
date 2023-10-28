@@ -16,6 +16,7 @@ const Chat = () => {
   const [notifications, setNotifications] = useState([]);
   const {user, setUser, setIsAuth, isAuth, loading} = useContext(Context);
   
+  
   useEffect(() => {
     axios.get(`${server}/user/me`, {
       withCredentials: true,

@@ -53,6 +53,7 @@ const SelectedChat = ({ activeChat, setActiveChat, notifications, setNotificatio
         }
         
       } else {
+        console.log('lakdjfldjflksadj');
         await setMessages([...messages, newMessage]);
       }
     })
