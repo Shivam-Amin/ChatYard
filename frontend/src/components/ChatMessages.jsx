@@ -3,6 +3,7 @@ import img from '../assets/DefaultImage.png'
 import '../CSS/chatMessages.css';
 import DOMPurify from 'dompurify';
 import { Context } from '../main';
+// import { isSameSender, isSameSenderMargin, isSameSenderPadding } from './Functions/chatMessagesFunctions';
 
 const ChatMessages = ({ activeChat, messages }) => {
 
@@ -21,15 +22,6 @@ const ChatMessages = ({ activeChat, messages }) => {
     }
   }
 
-
-  if (messages.length <= 0) return (
-    <div className='selectedChat img'>
-      <img src={img} alt="DefaultImage" />
-    </div>
-  )
-
-  
-
   const isSameSender = (sender, i) => {
     const length = activeChat.users.length;
     const users = activeChat.users;
@@ -39,20 +31,34 @@ const ChatMessages = ({ activeChat, messages }) => {
     }
     return (messages[i-1].sender._id === messages[i].sender._id)
   }
-
+  
   const isSameSenderPadding = (sender, i, isDateEqual) => {
     if (isSameSender(sender, i) && isDateEqual) {
-      return '0.5px 0 0.5px 70px'
+      if (i === messages.length-1) {
+        return '1px 0 20px 70px'
+      }
+      return '1px 0 1px 70px'
     }
-    return '0.5px 0 0.5px 15px'
+    if (i === messages.length-1) {
+      return '1px 0 20px 15px'
+    }
+    return '1px 0 1px 15px'
   }
-
+  
   const isSameSenderMargin = (sender, i, isDateEqual) => {
     if (isSameSender(sender, i) && isDateEqual) {
       return '0'
     }
+    
     return '18px 0 0 0'
   }
+
+
+  if (messages.length <= 0) return (
+    <div className='selectedChat img'>
+      <img src={img} alt="DefaultImage" />
+    </div>
+  )
 
   return (
     <div className='chatMessages'>

@@ -34,6 +34,10 @@ const AppWrapper = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
   const [reset, setReset] = useState(false)
+  const [notifications, setNotifications] = useState([]);
+
+  // to save the last selected chat.
+  const [lastSelected, setLastSelected] = useState({});
 
   return (
     <Context.Provider
@@ -42,7 +46,9 @@ const AppWrapper = () => {
         loading, setLoading,
         user, setUser,
         reset, setReset,
-        topLinks, bottomLinks}} >
+        topLinks, bottomLinks,
+        notifications, setNotifications,
+        lastSelected, setLastSelected }} >
         <App />
     </Context.Provider>
   )

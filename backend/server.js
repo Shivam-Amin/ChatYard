@@ -45,7 +45,7 @@ const start = async () => {
         if (!chat.users) return console.log('chat.users not found...');
 
         chat.users.forEach(user => {
-          if (user._id === newMessage.sender._id) return;
+          if (user._id == newMessage.sender._id) return;
 
           // except us send message to each user.
           socket.in(user._id).emit('RecieveMessage', newMessage);

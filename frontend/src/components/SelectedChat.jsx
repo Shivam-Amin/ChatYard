@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import ChatMessages from './ChatMessages';
 import img from '../assets/DefaultImage.png';
 import io from 'socket.io-client';
+// import { limitText, name, pic } from './Functions/selectedChatFunctions';
 
 const EndPoint = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -41,19 +42,19 @@ const SelectedChat = ({ activeChat, setActiveChat, notifications, setNotificatio
     }
   }, [reset]);
 
+
   // in this no [] in end, caz we want this to run sync.
   useEffect(() => {
     socket.on('RecieveMessage', async (newMessage) => {
       // add recieved message to every other users messages.
       // & not to current user as it would be added by the enter effect.
-      if (!selectedChatCompare || selectedChatCompare?._id !== activeChat._id) {
+      if (!selectedChatCompare || selectedChatCompare._id !== newMessage.chat._id) {
         // send notification
-        if (!notifications.include(newMessage)) {
-          setNotifications([newMessage, ...notifications]);
+
+        if (!notifications.includes(newMessage)) {
+          await setNotifications([newMessage, ...notifications]);
         }
-        
       } else {
-        console.log('lakdjfldjflksadj');
         await setMessages([...messages, newMessage]);
       }
     })
@@ -146,18 +147,6 @@ const SelectedChat = ({ activeChat, setActiveChat, notifications, setNotificatio
     }
   }
 
-
-
-  function pic() {
-    if (activeChat.isGroupChat) {
-      return activeChat.groupPic;
-    } else {
-      const u =activeChat.users
-        .find((u) => (u._id !== user._id))
-      return u.pic
-    }
-  }
-
   function name() {
     // console.log(activeChat);
     if (activeChat.chatName !== "sender") {
@@ -168,14 +157,25 @@ const SelectedChat = ({ activeChat, setActiveChat, notifications, setNotificatio
       return u.name
     }
   }
-
-
+  
+  function pic() {
+    if (activeChat.isGroupChat) {
+      return activeChat.groupPic;
+    } else {
+      const u =activeChat.users
+        .find((u) => (u._id !== user._id))
+      return u.pic
+    }
+  }
+  
   // function for max words you can enter in message..
   function limitText(element, maxLength) {
     if (element.target.value.length > maxLength) {
       element.target.value = element.target.value.slice(0, maxLength);
     }
   }
+  
+  
 
   if (!activeChat) return (
     <div className='selectedChat img'>

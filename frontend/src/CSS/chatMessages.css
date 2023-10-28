@@ -136,6 +136,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  white-space: nowrap;
 
   font-size: var(--font-size-mid);
   color: var(--font-color-700);
@@ -144,6 +145,7 @@ p {
 .date::before, .date::after {
   content: "";
   width: 320px;
+  min-width: 100px;
   height: 1.6px;
   background-color: var(--scrollbar-bgcolor);
   display: block;
@@ -157,7 +159,6 @@ p {
   margin: 20em;
   background-color: var(--scrollbar-bgcolor);
   border-radius: 100vw;
-  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {

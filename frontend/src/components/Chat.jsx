@@ -10,12 +10,12 @@ import Loading from './Loading.jsx';
 import ListChat from './ListChat';
 
 const Chat = () => {
-  
+  const {notifications, setNotifications, lastSelected, setLastSelected} = useContext(Context)
+  const {user, setUser, setIsAuth, isAuth, loading} = useContext(Context);
   const [activeChat, setActiveChat] = useState();
   const [chats, setChats] = useState([]);
-  const [notifications, setNotifications] = useState([]);
-  const {user, setUser, setIsAuth, isAuth, loading} = useContext(Context);
   
+
   
   useEffect(() => {
     axios.get(`${server}/user/me`, {
@@ -29,6 +29,7 @@ const Chat = () => {
       setUser({});
       setIsAuth(false)
     })
+    console.log(notifications);
   }, [])
 
   if (!isAuth) {
@@ -43,7 +44,13 @@ const Chat = () => {
         <Sidebar />
       </div>
       <div className="chat__listChat">
-        <ListChat chats={chats} setChats={setChats} setActiveChat={setActiveChat} />
+        <ListChat 
+        chats={chats} 
+        setChats={setChats} 
+        setActiveChat={setActiveChat}
+        lastSelected={lastSelected}
+        setLastSelected={setLastSelected} />
+
       </div>
 
       <div className="chat__main">
@@ -55,7 +62,12 @@ const Chat = () => {
       </div>
 
       <div className="chat__listYard2">
-        <Status activeChat={activeChat}/>
+        <Status activeChat={activeChat}
+          setActiveChat={setActiveChat}
+          notifications={notifications}
+          setNotifications={setNotifications}
+          lastSelected={lastSelected}
+          setLastSelected={setLastSelected} />
       </div>
     </div>
   )

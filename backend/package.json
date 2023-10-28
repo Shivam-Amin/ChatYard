@@ -4,9 +4,6 @@
   "description": "",
   "main": "server.js",
   "type": "module",
-  "engines": {
-    "node": ">=14.17.0"
-  },
   
   "scripts": {
     "start": "node server.js",

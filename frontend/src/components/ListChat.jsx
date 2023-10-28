@@ -5,20 +5,19 @@ import '../CSS/listChat.css'
 import '../CSS/sidebar.css'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { getSender, setPreviousSelected } from './Functions/ListChatFunctions';
 // import { ObjectId } from 'mongodb';
 
 
 var userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 const ListChat = (props) => {
-  const {loading, setLoading, reset, setReset} = useContext(Context);
+  const {loading, setLoading, reset, setReset, lastSelected, setLastSelected} = useContext(Context);
 
   const { chats, setChats, setActiveChat} = props;
   const { topLinks, user } = useContext(Context);
   const selectedLink = topLinks.find(link => link.selected);
 
-  // to save the last selected chat.
-  const [lastSelected, setLastSelected] = useState({});
 
   // for scrolling to top.
   // const containerRef = useRef(null);
@@ -41,35 +40,19 @@ const ListChat = (props) => {
         const chat = (sessionStorage.getItem("previousSelected")) 
         ? sessionStorage.getItem("previousSelected") 
         : null
-        await setLastSelected(JSON.parse(chat))
-        await setActiveChat(JSON.parse(chat))
+         setLastSelected(JSON.parse(chat))
+         setActiveChat(JSON.parse(chat))
         
       }
       fetchData().then(getPreviousSelected())
 
       setLoading(false);
+      return;
     } catch (error) {
       console.log(error.messge);
       toast.error(error.message)
     }
   }, [chats, reset])
-
-  function getSender(loggedUser, chat) {
-    if (chat.isGroupChat) {
-      return chat;
-    } 
-      
-    if (chat.users[1]._id === loggedUser._id) {
-      return chat.users[0];
-    } 
-    return chat.users[1];
-  }
-
-  async function setPreviousSelected(chat, index) {
-    setActiveChat(chat);
-    setLastSelected(chat);
-    sessionStorage.setItem("previousSelected", JSON.stringify(chat));
-  }
 
   
   return (
@@ -96,7 +79,7 @@ const ListChat = (props) => {
                       // defaultChecked={chat._id === lastSelected?._id}
                       checked={chat._id === lastSelected?._id}
                       onChange={() =>{
-                        setPreviousSelected(chat, index);
+                        setPreviousSelected(chat, index, setActiveChat, setLastSelected);
                         setReset(prev => !prev)
                       }} />
                     <label htmlFor={chat._id} >
