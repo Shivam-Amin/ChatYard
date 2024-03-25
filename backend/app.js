@@ -8,14 +8,6 @@ import cors from 'cors';
 
 export const app = express();
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Allow credentials (cookies)
-  optionsSuccessStatus: 204, // Respond with a 204 status for preflight requests
-}));
-
-
 // Using Middlewares..
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}))
