@@ -10,7 +10,7 @@ import img from '../assets/DefaultImage.png';
 import io from 'socket.io-client';
 // import { limitText, name, pic } from './Functions/selectedChatFunctions';
 
-const EndPoint = "http://localhost:5000";
+const EndPoint = "https://nodejs-chatyard.onrender.com/";
 var socket, selectedChatCompare;
   // To check where the message is from selected chat or not..
   // if it's not then will give notification.
