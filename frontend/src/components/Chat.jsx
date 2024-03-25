@@ -15,7 +15,9 @@ const Chat = () => {
   const [activeChat, setActiveChat] = useState();
   const [chats, setChats] = useState([]);
   
-
+  if (!isAuth) {
+    return <Navigate to={'/login'} />
+  }
   
   useEffect(() => {
     axios.get(`${server}/user/me`, {
@@ -31,10 +33,6 @@ const Chat = () => {
     })
     console.log(notifications);
   }, [])
-
-  if (!isAuth) {
-    return <Navigate to={'/login'} />
-  }
 
   // console.log(activeChat);
   return (
