@@ -5,7 +5,7 @@ import './index.css'
 import { Provider } from 'react-redux';
 import store from '../store.js';
 
-export const server = 'https://nodejs-chatyard.onrender.com';
+export const server = 'https://nodejs-chatyard.onrender.com/api/v1';
 export const Context = createContext();
 
 // Check if the session storage values exist
