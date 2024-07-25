@@ -1,7 +1,7 @@
 .chat {
     display: flex;
     height: 100vh;
-    min-width: 40em;
+    min-width: 50em;
 }
 
 .chat .chat__listChat {

@@ -71,7 +71,21 @@ const Signup = () => {
       setIsAuth(true);
       setLoading(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      let errorMessage = 'An unexpected error occurred';
+      if (error.response && error.response.data) {
+        if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data.message) {
+          errorMessage = error.response.data.message;
+        } else {
+          errorMessage = JSON.stringify(error.response.data);
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      // Display the error message with toast
+      toast.error(errorMessage);
       setIsAuth(false);
       setLoading(false);
     }

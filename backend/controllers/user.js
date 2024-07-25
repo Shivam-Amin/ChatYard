@@ -3,6 +3,11 @@ import { User } from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import { sendCookie } from "../utils/features.js";
 import cloudinary from 'cloudinary';
+import { config } from 'dotenv';
+
+config({
+  path: '.env'
+})
 
 let ImageID = null;
 
