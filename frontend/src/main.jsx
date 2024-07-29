@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 import store from '../store.js';
 import { config } from 'dotenv';
 
-// export const server = 'https://nodejs-chatyard.onrender.com/api/v1';
-// config({
-//   path: '.env'
-// })
+export const server = 'https://nodejs-chatyard.onrender.com/api/v1';
+config({
+  path: '.env'
+})
 
 // export const server = process.env.BACKEND_URL;
-export const server = 'http://localhost:5000/api/v1';
+// export const server = 'http://localhost:5000/api/v1';
 export const Context = createContext();
 
 // Check if the session storage values exist
